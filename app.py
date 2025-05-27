@@ -1,5 +1,5 @@
 import streamlit as st
-from naturecomm.chmm_actions import *
+from chmm_actions import *
 import numpy as np
 import matplotlib.pyplot as plt
 from plot import *

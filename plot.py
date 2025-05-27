@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import igraph
 from matplotlib import cm, colors
-from naturecomm.chmm_actions import forwardE
+from chmm_actions import forwardE
 
 def plot_graph(
     chmm, x, a, output_file,cmap=cm.Spectral, multiple_episodes=False, vertex_size=30
