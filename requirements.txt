@@ -7,4 +7,4 @@ python_igraph
 scipy
 streamlit
 tqdm
-pycairo
+cairocffi

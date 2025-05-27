@@ -317,10 +317,10 @@ if st.button("Train"):
         axes.set_title("Loglikelihood")
         fig.tight_layout()
         st.pyplot(fig)
-        #graph = plot_graph(
-        #model, x_d, a_d, output_file="rectangular_room_graph_online.png", cmap=cmap
-        #)
-        #st.image("rectangular_room_graph_online.png")
+        graph = plot_graph(
+        model, x_d, a_d, output_file="rectangular_room_graph_online.png", cmap=cmap
+        )
+        st.image("rectangular_room_graph_online.png")
         
 
     with col2:
@@ -330,10 +330,10 @@ if st.button("Train"):
         axes.set_title("Loglikelihood")
         fig.tight_layout()
         st.pyplot(fig)
-        #graph = plot_graph(
-        #chmm, x_d, a_d, output_file="rectangular_room_graph.png", cmap=cmap
-        #)
-        #st.image("rectangular_room_graph.png")
+        graph = plot_graph(
+        chmm, x_d, a_d, output_file="rectangular_room_graph.png", cmap=cmap
+        )
+        st.image("rectangular_room_graph.png")
 
     plt.matshow(room, cmap=cmap)
     plt.savefig("rectangular_room_layout.png")
