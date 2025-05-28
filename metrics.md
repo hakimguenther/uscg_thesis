@@ -25,7 +25,6 @@ def action_policy_entropy(T):
 - Monitors exploration/exploitation balance:
   - High entropy: Exploratory behavior (uniform action distribution)
   - Low entropy: Exploitative behavior (peaked distribution)
-- Uses base-2 logarithm for interpretability in bits
 
 ### 3. **Effective Clones**
 ```python
@@ -33,9 +32,6 @@ def effective_clones(C, threshold=1e-3):
     return np.sum(np.max(C, axis=0) > threshold, axis=1)
 ```
 - Number of active clones per state that exceed an activation threshold
-  - Induces capacity bottleneck for efficient learning
-  - Prevents overfitting by limiting clone amount
-  - Measures model complexity in CSCG framework
 
 ### 4. **Stationary Distribution Analysis**
 ```python
@@ -48,9 +44,6 @@ def stationary_distribution(T):
   $$
   \pi = \pi T
   $$
-- Reveals absorbing states and policy dead-ends
-- Helps identify policy convergence properties
-- Used for off-policy evaluation in RL
 
 ### 5. **Volatility Index**
 ```python
@@ -60,6 +53,4 @@ if len(metrics['divergence']) > 10:
     metrics['volatility'].append(np.std(recent_div))
 ```
 - Rolling standard deviation of policy divergences over 10 updates
-- Detects oscillatory learning dynamics
 - Early indicator of convergence (low volatility)
-- Helps tune learning rates adaptively
