@@ -3,6 +3,44 @@ import matplotlib.pyplot as plt
 import igraph
 from matplotlib import cm, colors
 from chmm_actions import forwardE
+import networkx as nx
+
+def plot_graph_no_cairo(
+    chmm, x, a, output_file, cmap=cm.Spectral, multiple_episodes=False, node_size=300
+):
+    states = chmm.decode(x, a)[1]
+    v = np.unique(states)
+
+    if multiple_episodes:
+        T = chmm.C[:, v][:, :, v][:-1, 1:, 1:]
+        v = v[1:]
+    else:
+        T = chmm.C[:, v][:, :, v]
+
+    A = T.sum(0)
+    A /= A.sum(1, keepdims=True)
+    A[np.isnan(A)] = 0  # avoid NaNs from zero division
+
+    # Create graph with NetworkX
+    G = nx.from_numpy_array((A > 0).astype(int), create_using=nx.DiGraph)
+
+    node_labels = np.arange(x.max() + 1).repeat(chmm.n_clones)[v]
+    if multiple_episodes:
+        node_labels -= 1
+
+    node_colors = [cmap(nl / node_labels.max())[:3] for nl in node_labels]
+
+    # Get layout (use kamada_kawai like igraph)
+    pos = nx.kamada_kawai_layout(G)
+
+    plt.figure(figsize=(8, 6))
+    nx.draw_networkx_nodes(G, pos, node_color=node_colors, node_size=node_size)
+    nx.draw_networkx_edges(G, pos, arrows=True, arrowstyle='-|>', arrowsize=10)
+    nx.draw_networkx_labels(G, pos, labels={i: str(v[i]) for i in range(len(v))}, font_size=10)
+    plt.axis("off")
+    plt.tight_layout()
+    plt.savefig(output_file, bbox_inches="tight")
+    plt.close()
 
 def plot_graph(
     chmm, x, a, output_file,cmap=cm.Spectral, multiple_episodes=False, vertex_size=30
