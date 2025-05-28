@@ -280,9 +280,9 @@ if st.button("Train"):
 
     offset = offset_c
     bar = st.progress(0,text="Training Progress:")
-    for i in trange(len(a_d)-offset):
+    for i in trange(len(a_d)-2*offset):
         
-        x, a = x_d[i:i+offset], a_d[i:i+offset]
+        x, a = x_d[i+offset:i+2*offset], a_d[i+offset:i+2*offset]
         old_T = model.T
         updated = model.add_observation(x, a)
 
